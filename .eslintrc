@@ -1,33 +1,41 @@
-extends: "eslint:recommended"
-rules:
-  indent:
-    - error
-    - 2
-  quotes:
-    - 2
-    - single
-  linebreak-style:
-    - 2
-    - unix
-  semi:
-    - 2
-    - always
-  no-console: 1
-  global-strict: 0
-  no-underscore-dangle: 0
-  no-trailing-spaces: 0
-  prefer-const: 2
-  no-use-before-define: 2
-  no-const-assign: 2
-  arrow-spacing: 2
-  prefer-arrow-callback: 2
-  prefer-template: 1
-  arrow-parens:
-      - 2
-      - as-needed
-  no-var: 2
-  radix: 2
-env:
-  es6: true
-globals:
-  require: true
+
+{
+    "rules": {
+        "no-var": 2,
+        "prefer-const": 2,
+        "object-shorthand": 2,
+        "indent": [
+          "error",
+           2
+        ],
+        "quotes": [
+            2,
+            "single"
+        ],
+        "linebreak-style": [
+            2,
+            "unix"
+        ],
+        "semi": [
+            2,
+            "always"
+        ],
+        "no-console": 0
+    },
+    "env": {
+        "es6": true,
+        "node": true,
+        "mocha": true
+    },
+    "ecmaFeatures": {
+        "modules": true
+    },
+    "globals": {
+      "describe": false,
+      "before": false,
+      "beforeEach": false,
+      "afterEach": false,
+      "it": false
+    },
+    "extends": "eslint:recommended"
+}
