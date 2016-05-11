@@ -1,24 +1,30 @@
 'use strict';
 
 const Hapi = require('hapi');
+const Hoek = require('hoek');
 
-const server = new Hapi.Server();
-server.connection({port: 3000});
-
-server.route({
-  method: 'GET',
-  path: '/',
-  handler: (request, reply) => {
-    reply('Hello, world!');
+const internals = {
+  config: {
+    isTest: false,
+    port: 3000,
+    path: './.temp'
   }
-});
+};
 
-server.start(err => {
+exports.init = (config, next) => {
 
-  if (err) {
-    throw err;
-  }
+  const options = Hoek.applyToDefaults(internals.config, config);
 
-  console.log(`Server running at: ${server.info.uri}`);
+  const server = new Hapi.Server();
 
-});
+  server.connection({ port: options.port, host: '127.0.0.1' });
+
+  server.route(require('./routes').routes);
+
+  server.start(err => {
+    if (err) {
+      throw err;
+    }
+    return next(err, server);
+  });
+};

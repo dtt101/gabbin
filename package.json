@@ -5,15 +5,19 @@
   "description": "wit.ai chat client",
   "main": "app/index.js",
   "scripts": {
-    "start": "node app/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app/start.js",
+    "test": "lab test -a code -t 100 -L"
   },
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^2.9.0"
+    "code": "^2.3.0",
+    "eslint": "^2.9.0",
+    "lab": "^10.5.1",
+    "rimraf": "^2.5.2"
   },
   "dependencies": {
     "hapi": "^13.3.0",
+    "hoek": "^4.0.0",
     "node-wit": "^3.2.2"
   }
 }
