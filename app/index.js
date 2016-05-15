@@ -1,7 +1,9 @@
 'use strict';
 
+const Path = require('path');
 const Hapi = require('hapi');
 const Hoek = require('hoek');
+const Inert = require('inert');
 
 const internals = {
   config: {
@@ -15,16 +17,24 @@ exports.init = (config, next) => {
 
   const options = Hoek.applyToDefaults(internals.config, config);
 
-  const server = new Hapi.Server();
+  const server = new Hapi.Server({
+    connections: {
+      routes: {
+        files: {
+          relativeTo: Path.join(__dirname, 'public')
+        }
+      }
+    }
+  });
 
   server.connection({ port: options.port, host: '127.0.0.1' });
+
+  server.register(Inert, () => {});
 
   server.route(require('./routes').routes);
 
   server.start(err => {
-    if (err) {
-      throw err;
-    }
+    if (err) throw err;
     return next(err, server);
   });
 };
