@@ -22,28 +22,40 @@
     <body>
       <div class="max-width-4 mx-auto">
         <div class="clearfix">
-          <div id="chat">
+          <div id="chat" class="col col-6">
             <h1 class="h1">Talk</h1>
             <div>
               <textarea placeholder="How can we help?" id="msg" class="h2 md-col-6 p2"></textarea>
             </div>
             <button type="button" id="btnSend" class="btn btn-primary not-rounded">Send</button>
           </div>
+          <div class="col col-6">
+            <h1 class="h1">Responses</h1>
+            <div id="responses"></div>
+          </div>
         </div>
       </div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
       <script type="text/javascript">
+        var chatSocket = new WebSocket("ws://localhost:1337/converse");
+
+        chatSocket.onmessage = function(event) {
+          $('#responses').prepend("<p>" + JSON.parse(event.data).msg + "</p>");
+        }
+
+        function createMessageJSON(text) {
+          var msg = {
+            type: "message",
+            text: text,
+            id:   "1",
+            date: Date.now()
+          };
+          return JSON.stringify(msg);
+        }
+
         $("#btnSend").click(function() {
-          $.ajax( "/converse?q=" + $('#msg').val() + "" )
-            .done(function(response) {
-              alert(response);
-            })
-            .fail(function(err) {
-              alert( "error" );
-            })
-            .always(function() {
-              $('#msg').val('');
-            });
+          chatSocket.send(createMessageJSON($('#msg').val()));
+          $('#msg').val('');
         });
       </script>
     </body>

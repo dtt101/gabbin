@@ -18,7 +18,8 @@ describe('converse', () => {
     RimRaf.sync(levelPath);
     done();
   });
-
+  
+  // TODO: change to websocket tests
   it('returns a string that matches the value of querystring q', { parallel: false}, done => {
     App.init({port: 0, path: levelPath, isTest: true}, (err, server) => {
       server.inject({ method: 'GET', url: '/converse?q=foo'}, response => {

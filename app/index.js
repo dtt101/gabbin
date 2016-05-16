@@ -4,6 +4,7 @@ const Path = require('path');
 const Hapi = require('hapi');
 const Hoek = require('hoek');
 const Inert = require('inert');
+const HAPIWebSocket = require('hapi-plugin-websocket');
 
 const internals = {
   config: {
@@ -29,7 +30,7 @@ exports.init = (config, next) => {
 
   server.connection({ port: options.port, host: '127.0.0.1' });
 
-  server.register(Inert, () => {});
+  server.register([Inert, HAPIWebSocket], () => {});
 
   server.route(require('./routes').routes);
 

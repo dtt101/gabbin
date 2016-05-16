@@ -1,3 +1,8 @@
+const WitConverse = require('./wit-converse.js');
+const WitClient = require('./wit-client.js');
+
+let client;
+
 exports.routes = [];
 
 exports.routes.push({
@@ -9,10 +14,16 @@ exports.routes.push({
 });
 
 exports.routes.push({
-  method: 'GET',
+  method: 'POST',
   path: '/converse',
-  handler: (request, reply) => {
-    // TODO: call node-wit and include function
-    return reply(request.query.q);
+  config: {
+    plugins: { websocket: { only: true } }
+  },
+  handler: (request) => {
+    // TODO: websocket per session
+    if (!client) {
+      client = WitClient(request.websocket().ws);
+    }
+    WitConverse(client, request.payload.text);
   }
 });
