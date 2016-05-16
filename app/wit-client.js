@@ -42,6 +42,6 @@ module.exports = (ws) => {
 
   const logger = new Logger(levels.DEBUG);
 
-  const token = 'LOL';
+  const token = process.env.WIT_API_KEY;
   return new Wit(token, actions, logger);
 };
