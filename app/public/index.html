@@ -53,7 +53,18 @@
           };
           return JSON.stringify(msg);
         }
-        var chatSocket = new WebSocket("ws://localhost:1337/converse");
+
+        var loc = window.location;
+        var socketUrl;
+        if (loc.protocol === "https:") {
+            socketUrl = "wss:";
+        } else {
+            socketUrl = "ws:";
+        }
+        socketUrl += "//" + loc.host;
+        socketUrl += loc.pathname + "converse";
+
+        var chatSocket = new WebSocket(socketUrl);
 
         chatSocket.onmessage = function(event) {
           var msg = JSON.parse(event.data).msg;
