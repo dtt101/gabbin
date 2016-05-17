@@ -1,7 +1,10 @@
 {
   "name": "gabbin",
   "version": "1.0.0",
-  "author": "",
+  "author": "David Thompson",
+  "engines": {
+    "node": "6.0.0"
+  },
   "description": "wit.ai chat client",
   "main": "app/start.js",
   "scripts": {
