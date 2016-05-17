@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "",
   "description": "wit.ai chat client",
-  "main": "app/index.js",
+  "main": "app/start.js",
   "scripts": {
     "start": "node app/start.js",
     "test": "lab test -a code -L"

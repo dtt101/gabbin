@@ -37,3 +37,9 @@ converse?v=20160330&session_id=123abc&q=weather%20in%20Brussels
 ```
 
 Visit root URL for test chat interface
+
+# TODO
+
+ * Update docs to reflects websocket interface
+ * Update tests to reflect websocket usage
+ * Show confidence in UI

@@ -14,6 +14,9 @@
             color: #111;
             background-color: #fff;
           }
+          .computer {
+            color: blue;
+          }
         </style>
         <link href="https://npmcdn.com/basscss@8.0.1/css/basscss.min.css" rel="stylesheet">
         <link href="https://npmcdn.com/basscss-btn@1.1.0/css/btn.css" rel="stylesheet">
@@ -30,19 +33,32 @@
             <button type="button" id="btnSend" class="btn btn-primary not-rounded">Send</button>
           </div>
           <div class="col col-6">
-            <h1 class="h1">Responses</h1>
+            <h1 class="h1">Chat</h1>
             <div id="responses"></div>
           </div>
         </div>
       </div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
       <script type="text/javascript">
+        function addMsgToChat(msg, cls) {
+          $('#responses').prepend("<p class=" + cls + ">" + msg + "</p>");
+        }
+
+        function createMessageJSON(text) {
+          var msg = {
+            type: "message",
+            text: text,
+            id:   "1",
+            date: Date.now()
+          };
+          return JSON.stringify(msg);
+        }
         var chatSocket = new WebSocket("ws://localhost:1337/converse");
 
         chatSocket.onmessage = function(event) {
           var msg = JSON.parse(event.data).msg;
           if (msg) {
-            $('#responses').prepend("<p>" + msg + "</p>");
+            addMsgToChat(msg, "computer")
           }
         }
 
@@ -58,18 +74,10 @@
           console.log('error ws called');
         }
 
-        function createMessageJSON(text) {
-          var msg = {
-            type: "message",
-            text: text,
-            id:   "1",
-            date: Date.now()
-          };
-          return JSON.stringify(msg);
-        }
-
         $("#btnSend").click(function() {
-          chatSocket.send(createMessageJSON($('#msg').val()));
+          var msg = $('#msg').val();
+          chatSocket.send(createMessageJSON(msg));
+          addMsgToChat(msg);
           $('#msg').val('');
         });
       </script>

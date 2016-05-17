@@ -28,7 +28,7 @@ exports.init = (config, next) => {
     }
   });
 
-  server.connection({ port: options.port, host: '127.0.0.1' });
+  server.connection({ port: options.port });
 
   server.register([Inert, HAPIWebSocket], () => {});
 
