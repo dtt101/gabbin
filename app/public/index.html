@@ -30,7 +30,7 @@
             <div>
               <textarea placeholder="How can we help?" id="msg" class="h2 col-8 p2"></textarea>
             </div>
-            <button type="button" id="btnSend" class="btn btn-primary not-rounded">Send</button>
+            <button type="button" id="btnSend" disabled class="btn btn-primary not-rounded">Send</button>
           </div>
           <div class="col col-6">
             <h1 class="h1">Chat</h1>
@@ -79,6 +79,7 @@
 
         chatSocket.onopen = function(event) {
           console.log('open ws called');
+          $('#btnSend').prop("disabled", false);
         }
 
         chatSocket.onerror = function(event) {
