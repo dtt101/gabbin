@@ -43,3 +43,4 @@ Visit root URL for test chat interface
  * Update docs to reflects websocket interface
  * Update tests to reflect websocket usage
  * Show confidence in UI
+ * Actually do MMF test
