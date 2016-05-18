@@ -2,18 +2,7 @@ const Logger = require('node-wit').Logger;
 const levels = require('node-wit').logLevels;
 const Wit = require('node-wit').Wit;
 
-// TODO: move this out into a lib file
-const firstEntityValue = (entities, entity) => {
-  const val = entities && entities[entity] &&
-    Array.isArray(entities[entity]) &&
-    entities[entity].length > 0 &&
-    entities[entity][0].value
-  ;
-  if (!val) {
-    return null;
-  }
-  return typeof val === 'object' ? val.value : val;
-};
+const firstEntityValue = require('../lib/first-entity-value.js');
 
 module.exports = (ws) => {
   const actions = {
