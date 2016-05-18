@@ -40,8 +40,13 @@
       </div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
       <script type="text/javascript">
-        function addMsgToChat(msg, cls) {
-          $('#responses').prepend("<p class=" + cls + ">" + msg + "</p>");
+        function addMsgToChat(msg, confidence, cls) {
+          var response = "<p class=" + cls + ">" + msg;
+          if (confidence) {
+            response += "<br><small>" + confidence + "</small>";
+          }
+          response += "</p>";
+          $('#responses').prepend(response);
         }
 
         function createMessageJSON(text) {
@@ -68,8 +73,9 @@
 
         chatSocket.onmessage = function(event) {
           var msg = JSON.parse(event.data).msg;
+          var confidence = JSON.parse(event.data).confidence;
           if (msg) {
-            addMsgToChat(msg, "computer")
+            addMsgToChat(msg, confidence, "computer")
           }
         }
 

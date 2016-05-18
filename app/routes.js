@@ -37,6 +37,7 @@ exports.routes.push({
     }
   },
   handler: (request) => {
+    // TODO: need session id to be passed through here
     const client = WitClient(request.websocket().ws);
     WitConverse(client, request.payload.text);
   }

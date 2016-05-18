@@ -40,7 +40,8 @@ Visit root URL for test chat interface
 
 # TODO
 
+ * Show confidence in UI
  * Update docs to reflects websocket interface
  * Update tests to reflect websocket usage
- * Show confidence in UI
+ * Session id needs to be real
  * Actually do MMF test

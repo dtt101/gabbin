@@ -7,12 +7,12 @@ const firstEntityValue = require('../lib/first-entity-value.js');
 module.exports = (ws) => {
   const actions = {
     say(sessionId, context, message, cb) {
-      ws.send(JSON.stringify({ msg: message }));
+      ws.send(JSON.stringify({ msg: message, confidence: context.confidence }));
       cb();
     },
     merge(sessionId, context, entities, message, cb) {
-      // Retrieve the show entity and store it into a context field
-      console.log(entities);
+      // TODO: add error checking
+      context.confidence = entities.intent[0].confidence;
       const show = firstEntityValue(entities, 'show');
       if (show) {
         context.show = show;
