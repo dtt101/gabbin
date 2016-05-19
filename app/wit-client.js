@@ -11,7 +11,7 @@ module.exports = (ws) => {
       cb();
     },
     merge(sessionId, context, entities, message, cb) {
-      // TODO: add error checking
+      // TODO: add whole intent to context
       context.confidence = entities.intent[0].confidence;
       const show = firstEntityValue(entities, 'show');
       if (show) {
