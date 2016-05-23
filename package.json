@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "David Thompson",
   "engines": {
-    "node": "6.0.0"
+    "node": "6.2.0"
   },
   "description": "wit.ai chat client",
   "main": "app/start.js",
