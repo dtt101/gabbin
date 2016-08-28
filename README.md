@@ -11,6 +11,12 @@ nvm use
 npm install
 ```
 
+Create .env file:
+
+```
+WIT_API_KEY=xxxx
+```
+
 ## Routes
 
 ### Converse
