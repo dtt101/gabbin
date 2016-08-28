@@ -26,6 +26,16 @@ module.exports = (ws) => {
       // TODO: run mmf test
       context.resultMsg = 'Looks like you are missing a microfilter, you can just get a new one from here: https://accessories.sky.com/catalogue/products/sky-microfilter?irct=sts';
       cb(context);
+    },
+    findMovieByGenre(sessionId, context, cb) {
+      // TODO search movie db by genre
+      context.movies = [
+        {title: 'Pretty in Pink'},
+        {title: 'The Breakfast Club'},
+        {title: 'Some Kind of Wonderful'},
+        {title: 'Weird Science'}
+        ];
+      cb(context);
     }
   };
 
