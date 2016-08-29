@@ -1,7 +1,7 @@
 const {Wit, log} = require('node-wit');
 
 const firstEntityValue = require('../lib/first-entity-value.js');
-const imdb = require('../lib/imdb.js');
+const mdb = require('../lib/mdb.js');
 
 module.exports = (ws) => {
   const actions = {
@@ -17,7 +17,7 @@ module.exports = (ws) => {
     },
     findMovieByGenre({sessionId, context, text, entities}) {
       return new Promise((resolve, reject) => {
-        context.movies = imdb.getMoviesForGenre(text);
+        context.movies = mdb.getMoviesForGenre(text);
         return resolve(context);
       });
     }
