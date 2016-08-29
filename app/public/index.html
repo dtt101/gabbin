@@ -21,6 +21,8 @@
         <link href="https://npmcdn.com/basscss@8.0.1/css/basscss.min.css" rel="stylesheet">
         <link href="https://npmcdn.com/basscss-btn@1.1.0/css/btn.css" rel="stylesheet">
         <link href="https://npmcdn.com/basscss-btn-primary@1.1.0/css/btn-primary.css" rel="stylesheet">
+        <link href="https://npmcdn.com/basscss-btn-outline@1.1.0/css/btn-outline.css" rel="stylesheet">
+        <link href="https://npmcdn.com/basscss-btn-sizes@1.2.0/css/btn-sizes.css" rel="stylesheet">
     </head>
     <body>
       <div class="max-width-4 mx-auto">
@@ -40,15 +42,22 @@
       </div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
       <script type="text/javascript">
-        function addMsgToChat(msg, confidence, cls) {
+        // show messages in UI
+        function addMsgToChat(msg, qr, cls) {
           var response = "<p class=" + cls + ">" + msg;
-          if (confidence) {
-            response += "<br><small>" + confidence + "</small>";
+          if (qr) {
+            response += '<div>';
+            qr.forEach(function(q) {
+              response += "<input type='button' class='btn btn-outline btn-small btnGenre' value='" + q + "' />";
+            });
+            response += '</div>';
           }
           response += "</p>";
+
           $('#responses').prepend(response);
         }
 
+        // create json to send to server
         function createMessageJSON(text) {
           var msg = {
             type: "message",
@@ -59,6 +68,7 @@
           return JSON.stringify(msg);
         }
 
+        // set socket and handlers
         var loc = window.location;
         var socketUrl;
         if (loc.protocol === "https:") {
@@ -71,11 +81,16 @@
 
         var chatSocket = new WebSocket(socketUrl);
 
+        // handle message from server
         chatSocket.onmessage = function(event) {
-          var msg = JSON.parse(event.data).msg;
-          var confidence = JSON.parse(event.data).confidence;
-          if (msg) {
-            addMsgToChat(msg, confidence, "computer")
+          var data = JSON.parse(event.data);
+          if (data.cmd !== 'PING' && data.cmd !== 'WELCOME') {
+            // TODO: support list of movies
+            var msg = data.response.text;
+            var qr = data.response.quickreplies;
+            if (msg || qr) {
+              addMsgToChat(msg, qr, "computer")
+            }
           }
         }
 
@@ -92,11 +107,16 @@
           console.log('error ws called');
         }
 
+        // event handlers
         $("#btnSend").click(function() {
           var msg = $('#msg').val();
           chatSocket.send(createMessageJSON(msg));
           addMsgToChat(msg);
           $('#msg').val('');
+        });
+
+        $( document ).on( "click", "input.btnGenre", function(e) {
+          chatSocket.send(createMessageJSON(e.target.value));
         });
       </script>
     </body>
