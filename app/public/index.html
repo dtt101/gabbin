@@ -43,7 +43,7 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
       <script type="text/javascript">
         // show messages in UI
-        function addMsgToChat(msg, qr, cls) {
+        function addMsgToChat(msg, qr, movies, cls) {
           var response = "<p class=" + cls + ">" + msg;
           if (qr) {
             response += '<div>';
@@ -51,6 +51,11 @@
               response += "<input type='button' class='btn btn-outline btn-small btnGenre' value='" + q + "' />";
             });
             response += '</div>';
+          }
+          if (movies) {
+            movies.results.forEach(function(movie) {
+              response += '<div>' + movie.title + '</div>';
+            });
           }
           response += "</p>";
 
@@ -85,12 +90,10 @@
         chatSocket.onmessage = function(event) {
           var data = JSON.parse(event.data);
           if (data.cmd !== 'PING' && data.cmd !== 'WELCOME') {
-            // TODO: support list of movies
             var msg = data.response.text;
             var qr = data.response.quickreplies;
-            if (msg || qr) {
-              addMsgToChat(msg, qr, "computer")
-            }
+            var movies = data.response.movies;
+            addMsgToChat(msg, qr, movies, "computer");
           }
         }
 
@@ -115,7 +118,7 @@
           $('#msg').val('');
         });
 
-        $( document ).on( "click", "input.btnGenre", function(e) {
+        $(document).on( "click", "input.btnGenre", function(e) {
           chatSocket.send(createMessageJSON(e.target.value));
         });
       </script>

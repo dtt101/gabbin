@@ -25,6 +25,7 @@
     "hapi-plugin-websocket": "^0.9.2",
     "hoek": "^4.0.0",
     "inert": "^4.0.0",
-    "node-wit": "^4.1.0"
+    "node-wit": "^4.1.0",
+    "wreck": "^9.0.0"
   }
 }

@@ -9,22 +9,25 @@ module.exports = (ws) => {
       const {sessionId, context, entities} = request;
       const {text, quickreplies} = response;
       return new Promise(function(resolve, reject) {
-        console.log('user said...', request.text);
-        console.log('sending...', JSON.stringify(response));
+        if (context.movies) {
+          response.movies = context.movies;
+        }
         ws.send(JSON.stringify({response}));
         return resolve();
       });
     },
     findMovieByGenre({sessionId, context, text, entities}) {
       return new Promise((resolve, reject) => {
-        context.movies = mdb.getMoviesForGenre(text);
-        return resolve(context);
+        mdb.getMoviesForGenre(text).then(result => {
+          context.movies = result;
+          return resolve(context);
+        });
       });
     }
   };
   return new Wit({
     accessToken: process.env.WIT_API_KEY, 
     actions, 
-    logger: new log.Logger(log.DEBUG)
+    logger: new log.Logger(log.INFO)
   });
 };
