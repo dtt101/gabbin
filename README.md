@@ -46,8 +46,9 @@ Visit root URL for test chat interface
 
 # TODO
 
- * Show confidence in UI
+ * Wire to entity api
+ * get recent watched movie
+ * do age range check
  * Update docs to reflects websocket interface
  * Update tests to reflect websocket usage
  * Session id needs to be real
- * Actually do MMF test
