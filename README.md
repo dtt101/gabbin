@@ -15,6 +15,7 @@ Create .env file:
 
 ```
 WIT_API_KEY=xxxx
+MDB_API_KEY=xxxx
 ```
 
 ## Routes
